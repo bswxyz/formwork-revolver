@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>REVOLVER — Guide · How this was built</title>
+<meta name="description" content="How the REVOLVER site was designed and built by Fable: a CSS/SVG spinning vinyl, a WebAudio generative loop, and a circular AnalyserNode visualizer." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root{--bg:#141213;--ink:#f0ece3;--dim:#a49b8f;--faint:#6f665c;--accent:#ff5a1f;--accent-2:#e8b04b;--line:rgba(240,236,227,.12)}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font-family:"Space Grotesk",system-ui,sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:760px;margin:0 auto;padding:clamp(28px,6vw,80px) clamp(20px,5vw,32px)}
+  .top{display:flex;justify-content:space-between;align-items:center;font-family:"JetBrains Mono",monospace;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin-bottom:clamp(40px,8vh,84px)}
+  .top a{color:var(--dim)}
+  .brand{font-weight:700;font-size:1.2rem;letter-spacing:.14em;color:var(--ink)}
+  .brand span{color:var(--accent);font-size:.6rem;vertical-align:top}
+  h1{font-weight:700;font-size:clamp(2.4rem,7vw,4.2rem);line-height:1.02;letter-spacing:-.03em;margin-bottom:1.1rem}
+  h1 em{color:var(--accent);font-style:normal}
+  .lede{font-size:clamp(1.08rem,2.2vw,1.32rem);color:var(--dim);max-width:56ch;margin-bottom:3.2rem}
+  h2{font-weight:700;font-size:clamp(1.5rem,3.6vw,2.1rem);margin:2.8rem 0 1rem;letter-spacing:-.02em}
+  p{color:var(--dim);margin:0 0 1.1rem;max-width:64ch}
+  .tag{display:inline-block;font-family:"JetBrains Mono",monospace;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent-2);margin-bottom:1.4rem}
+  ul,ol{color:var(--dim);margin:0 0 1.2rem 1.2rem}
+  li{margin:.42rem 0}
+  strong{color:var(--ink);font-weight:500}
+  code{font-family:"JetBrains Mono",monospace;font-size:.85em;background:rgba(255,255,255,.06);padding:.12em .4em;border-radius:3px;color:var(--ink)}
+  pre{background:#1b1819;border:1px solid var(--line);border-radius:8px;padding:18px 20px;overflow-x:auto;margin:0 0 1.4rem;font-size:.8rem;line-height:1.62}
+  pre code{background:none;padding:0;color:var(--dim)}
+  pre .k{color:var(--accent-2)} pre .c{color:var(--faint)}
+  .rule{height:1px;background:var(--line);margin:3rem 0}
+  .stack{list-style:none;margin:0 0 1.2rem;padding:0;display:grid;gap:2px}
+  .stack li{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--line)}
+  .stack b{color:var(--ink);font-weight:500;min-width:132px;display:inline-block}
+  footer{margin-top:4rem;padding-top:2rem;border-top:1px solid var(--line);font-family:"JetBrains Mono",monospace;font-size:.8rem;color:var(--faint)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <a class="brand" href="../">REVOLVER<span>®</span></a>
+    <a href="../">← Back to site</a>
+  </div>
+
+  <span class="tag">Build guide · Site 21 of 25</span>
+  <h1>A record shop where the deck <em>actually plays</em>.</h1>
+  <p class="lede">REVOLVER is one of 25 sites designed and built by Fable to show off web design,
+    motion, and sound. Here's exactly how the turntable was made — and how you can build the same.</p>
+
+  <h2>The idea</h2>
+  <p>The brief was a tactile, warm-neon record shop. So the hero <em>is</em> a turntable: a vinyl record
+    drawn in pure CSS &amp; SVG, a tonearm that swings onto the groove, and a play button that starts a
+    <strong>generative loop synthesised live in the browser</strong>. There are no audio files. Every note,
+    kick and hat is oscillators and gain envelopes, and the ring around the record is that same audio,
+    read back through an <code>AnalyserNode</code> and drawn as a circular waveform.</p>
+
+  <h2>The stack</h2>
+  <ul class="stack">
+    <li><b>The record</b> A CSS disc: <code>repeating-radial-gradient</code> grooves, a conic sheen, and an SVG label with <code>textPath</code> lettering.</li>
+    <li><b>The sound</b> The Web Audio API — a filtered three-oscillator pad plus a look-ahead scheduler firing bass, hats and a seeded arpeggio.</li>
+    <li><b>The visualizer</b> An <code>AnalyserNode</code>'s time-domain data mapped onto a circle, rendered on a <code>&lt;canvas&gt;</code>.</li>
+    <li><b>Type</b> Space Grotesk 700 for display, JetBrains Mono for track times and readouts.</li>
+    <li><b>Build</b> Plain HTML/CSS/JS. No framework, no bundler, no dependencies.</li>
+  </ul>
+
+  <h2>The signature technique</h2>
+  <p>Sound is scheduled with a <strong>look-ahead clock</strong>: a timer wakes every 25&nbsp;ms and queues
+    any notes due in the next tenth of a second against the audio clock, so timing never drifts even if the
+    main thread stutters. The same master bus feeds an analyser, and each frame the waveform is wrapped
+    around the record:</p>
+  <pre><code><span class="c">// queue 16th-notes a little ahead of the audio clock</span>
+<span class="k">while</span> (nextT &lt; ctx.currentTime + 0.12) {
+  scheduleStep(step, nextT);
+  nextT += (60 / tempo) / 4;
+  step = (step + 1) % 16;
+}
+
+<span class="c">// read the live signal and bend it around a circle</span>
+analyser.getByteTimeDomainData(time);
+<span class="k">for</span> (<span class="k">let</span> i = 0; i &lt;= N; i++) {
+  <span class="k">const</span> a = (i / N) * TAU - Math.PI / 2;
+  <span class="k">const</span> v = (time[(i / N * time.length) | 0] - 128) / 128;
+  <span class="k">const</span> r = base + v * R * 0.11;            <span class="c">// waveform → radius</span>
+  ctx.lineTo(cx + Math.cos(a) * r, cy + Math.sin(a) * r);
+}</code></pre>
+  <p>Picking a different record in the crate retunes the running engine in place — new root note, scale,
+    waveform and tempo — with <code>setTargetAtTime</code> glides so the change is smooth, never a click.</p>
+
+  <h2>Details that matter</h2>
+  <ul>
+    <li><strong>No autoplay, ever.</strong> The <code>AudioContext</code> is created inside the click handler, and feature-detected — if the browser has no Web Audio, the deck still spins and a note explains why.</li>
+    <li><strong>The label stays readable</strong> — the disc spins, but the centre label counter-rotates with an equal, opposite CSS animation so the type never tumbles.</li>
+    <li><strong>Reduced motion</strong> stops the platter, freezes the ring on a single static frame, and reveals all content immediately.</li>
+    <li><strong>Safe by default</strong> — a compressor sits on the master bus, gains ramp instead of jumping, and the visualizer caps device-pixel-ratio at 1.5.</li>
+  </ul>
+
+  <h2>Ship it on GitHub Pages</h2>
+  <p>Every site here is static, so hosting is three commands:</p>
+  <pre><code>git init -b main &amp;&amp; git add -A &amp;&amp; git commit -m "ship"
+gh repo create fable-revolver --public --source=. --push
+gh api --method POST /repos/OWNER/fable-revolver/pages \
+  -f 'source[branch]=main' -f 'source[path]=/'</code></pre>
+  <p>Use <strong>relative paths</strong> (<code>./main.js</code>, not <code>/main.js</code>) because project
+    Pages live under <code>/repo-name/</code>. Add an empty <code>.nojekyll</code> file so every asset serves verbatim.</p>
+
+  <div class="rule"></div>
+  <p>That's the whole recipe: a record built from gradients, a groove built from oscillators, and one analyser
+    tying picture to sound. The other 24 sites each swap the central technique — but the discipline is the same.</p>
+
+  <footer>Designed &amp; built by <strong>Fable</strong> · Part of a 25-site showcase · <a href="../">Return to REVOLVER →</a></footer>
+</div>
+</body>
+</html>

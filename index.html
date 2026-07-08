@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+<script>document.documentElement.classList.add('js')</script>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>REVOLVER — Independent record shop &amp; listening room</title>
+<meta name="description" content="REVOLVER is an independent record shop and listening room. A spinning-vinyl turntable, a live audio-reactive groove, and a crate of pressings you can play." />
+<meta name="theme-color" content="#141213" />
+<meta property="og:title" content="REVOLVER — records that turn" />
+<meta property="og:description" content="An independent record shop with a turntable you can actually play." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+
+<header class="nav">
+  <a class="brand" href="./">REVOLVER<span>®</span></a>
+  <nav class="nav-links" aria-label="Primary">
+    <a href="#turntable">Turntable</a>
+    <a href="#crate">The Crate</a>
+    <a href="#shop">The Shop</a>
+    <a class="nav-guide" href="./guide/">Guide</a>
+  </nav>
+</header>
+
+<main>
+  <section class="hero" id="turntable">
+    <div class="hero-copy">
+      <p class="eyebrow reveal">Independent record shop · Listening room · Est. 2019 — Lisbon</p>
+      <h1 class="hero-title">
+        <span class="line">Revolver</span>
+      </h1>
+      <p class="hero-sub reveal">A shop for records that turn. Drop the needle and the whole
+        crate comes alive — a warm, generative groove, pressed straight from the browser.</p>
+
+      <div class="now reveal" aria-live="polite">
+        <p class="now-label">Now playing<span class="now-dot" aria-hidden="true"></span></p>
+        <p class="now-title" id="nowTitle">Neon Vespers</p>
+        <p class="now-meta"><span id="nowArtist">Halogen Choir</span>
+          <i aria-hidden="true">·</i>
+          <span id="nowGenre">Dub Techno</span>
+          <i aria-hidden="true">·</i>
+          <span class="mono" id="nowTime">6:12</span></p>
+      </div>
+
+      <div class="controls reveal">
+        <button class="play" id="play" type="button" aria-pressed="false" aria-label="Play the generative groove">
+          <span class="play-ico" aria-hidden="true">
+            <svg class="ico-play" viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z"/></svg>
+            <svg class="ico-pause" viewBox="0 0 24 24"><rect x="7" y="5.5" width="3.4" height="13" rx="1"/><rect x="13.6" y="5.5" width="3.4" height="13" rx="1"/></svg>
+          </span>
+          <span class="play-word" id="playWord">Play</span>
+        </button>
+        <div class="readout mono">
+          <span class="r-row"><b id="stState">Idle</b> · deck standby</span>
+          <span class="r-row"><span id="stBpm">84</span> BPM · 33⅓ RPM</span>
+        </div>
+      </div>
+      <p class="audio-note mono" id="audioNote" hidden>Audio engine unavailable in this browser — the deck still spins.</p>
+    </div>
+
+    <div class="deck reveal">
+      <div class="turntable" id="deck">
+        <div class="platter">
+          <canvas class="viz" id="viz" aria-hidden="true"></canvas>
+          <div class="vinyl" id="vinyl" aria-hidden="true">
+            <div class="grooves"></div>
+            <div class="sheen"></div>
+            <div class="label" id="label">
+              <svg class="label-arc" viewBox="0 0 200 200" preserveAspectRatio="xMidYMid meet">
+                <defs>
+                  <path id="arcTop" d="M100,100 m-72,0 a72,72 0 1,1 144,0" />
+                  <path id="arcBot" d="M100,100 m72,0 a72,72 0 1,1 -144,0" />
+                </defs>
+                <text class="arc-t"><textPath href="#arcTop" startOffset="50%">REVOLVER RECORDINGS · A SIDE ·</textPath></text>
+                <text class="arc-t"><textPath href="#arcBot" startOffset="50%">45 · PRESSED IN LISBON · 45 ·</textPath></text>
+              </svg>
+              <div class="label-center">
+                <span class="label-side" id="labelSide">A1</span>
+                <span class="label-rpm">33⅓</span>
+              </div>
+            </div>
+            <span class="spindle"></span>
+          </div>
+          <div class="tonearm" id="tonearm" aria-hidden="true">
+            <span class="arm-base"></span>
+            <span class="arm-pivot"></span>
+            <span class="arm"><span class="arm-head"></span></span>
+            <span class="arm-rest"></span>
+          </div>
+        </div>
+        <p class="deck-cap mono" aria-hidden="true">MODEL RVR-45 · DIRECT DRIVE</p>
+      </div>
+    </div>
+
+    <div class="scroll-cue reveal" aria-hidden="true"><span></span>the crate</div>
+  </section>
+
+  <section class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      <span>SOUL</span><i>◆</i><span>DUB</span><i>◆</i><span>KRAUT</span><i>◆</i><span>NU-JAZZ</span><i>◆</i><span>AMBIENT</span><i>◆</i><span>POST-PUNK</span><i>◆</i><span>DOWNTEMPO</span><i>◆</i>
+      <span>SOUL</span><i>◆</i><span>DUB</span><i>◆</i><span>KRAUT</span><i>◆</i><span>NU-JAZZ</span><i>◆</i><span>AMBIENT</span><i>◆</i><span>POST-PUNK</span><i>◆</i><span>DOWNTEMPO</span><i>◆</i>
+    </div>
+  </section>
+
+  <section id="crate" class="crate">
+    <div class="section-head">
+      <p class="index reveal">02 — The Crate</p>
+      <h2 class="reveal">Six pressings,<br />in stock today.</h2>
+      <p class="crate-note reveal">Tap a record to cue it on the deck. Each one retunes the groove —
+        its key, its tempo, its texture.</p>
+    </div>
+    <ol class="tracks" id="tracks">
+      <!-- rows injected by main.js; static fallback below for no-JS -->
+      <li class="track-fallback">
+        <p>Enable JavaScript to browse and cue the crate.</p>
+      </li>
+    </ol>
+  </section>
+
+  <section id="shop" class="shop">
+    <div class="shop-inner">
+      <p class="eyebrow reveal">The Shop</p>
+      <p class="shop-text reveal">REVOLVER is one narrow room on <em>Rua do Século</em> — a wall of
+        second-hand pressings, two listening booths, and a coffee machine that has seen things.
+        We buy whole collections. We repair styli. We keep the lights warm and the door open late.</p>
+      <div class="shop-stats reveal">
+        <div class="stat"><span class="mono stat-n">12,400</span><span class="stat-l">Records on the wall</span></div>
+        <div class="stat"><span class="mono stat-n">02</span><span class="stat-l">Listening booths</span></div>
+        <div class="stat"><span class="mono stat-n">Fri</span><span class="stat-l">Late — open till 23:00</span></div>
+      </div>
+      <p class="shop-sign reveal">— The counter staff</p>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="footer-top">
+    <p class="footer-brand">REVOLVER<span>®</span></p>
+    <div class="footer-info mono">
+      <p>34 Rua do Século · Lisboa 1200-435</p>
+      <p>Tue–Sun · 11:00 — 23:00</p>
+      <p><a href="./guide/">How this was built →</a></p>
+    </div>
+  </div>
+  <div class="footer-bottom mono">
+    <span>© 2026 Revolver Recordings</span>
+    <span>Designed &amp; built by <a href="./guide/">Fable</a></span>
+  </div>
+</footer>
+
+<script src="./main.js"></script>
+</body>
+</html>
