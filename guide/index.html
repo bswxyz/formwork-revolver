@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>REVOLVER — Guide · How this was built</title>
-<meta name="description" content="How the REVOLVER site was designed and built by Fable: a CSS/SVG spinning vinyl, a WebAudio generative loop, and a circular AnalyserNode visualizer." />
+<meta name="description" content="How the REVOLVER site was designed and built by Formwork: a CSS/SVG spinning vinyl, a WebAudio generative loop, and a circular AnalyserNode visualizer." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -48,7 +48,7 @@
 
   <span class="tag">Build guide · Site 21 of 25</span>
   <h1>A record shop where the deck <em>actually plays</em>.</h1>
-  <p class="lede">REVOLVER is one of 25 sites designed and built by Fable to show off web design,
+  <p class="lede">REVOLVER is one of 25 sites designed and built by Formwork to show off web design,
     motion, and sound. Here's exactly how the turntable was made — and how you can build the same.</p>
 
   <h2>The idea</h2>
@@ -101,8 +101,8 @@ analyser.getByteTimeDomainData(time);
   <h2>Ship it on GitHub Pages</h2>
   <p>Every site here is static, so hosting is three commands:</p>
   <pre><code>git init -b main &amp;&amp; git add -A &amp;&amp; git commit -m "ship"
-gh repo create fable-revolver --public --source=. --push
-gh api --method POST /repos/OWNER/fable-revolver/pages \
+gh repo create formwork-revolver --public --source=. --push
+gh api --method POST /repos/OWNER/formwork-revolver/pages \
   -f 'source[branch]=main' -f 'source[path]=/'</code></pre>
   <p>Use <strong>relative paths</strong> (<code>./main.js</code>, not <code>/main.js</code>) because project
     Pages live under <code>/repo-name/</code>. Add an empty <code>.nojekyll</code> file so every asset serves verbatim.</p>
@@ -111,7 +111,7 @@ gh api --method POST /repos/OWNER/fable-revolver/pages \
   <p>That's the whole recipe: a record built from gradients, a groove built from oscillators, and one analyser
     tying picture to sound. The other 24 sites each swap the central technique — but the discipline is the same.</p>
 
-  <footer>Designed &amp; built by <strong>Fable</strong> · Part of a 25-site showcase · <a href="../">Return to REVOLVER →</a></footer>
+  <footer>Designed &amp; built by <strong>Formwork</strong> · Part of a 25-site showcase · <a href="../">Return to REVOLVER →</a></footer>
 </div>
 </body>
 </html>

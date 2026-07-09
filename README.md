@@ -1,6 +1,6 @@
 # Record shop / music player template — audio-reactive vinyl
 
-**Live demo → https://bswxyz.github.io/fable-revolver/** · [How it was built](https://bswxyz.github.io/fable-revolver/guide/)
+**Live demo → https://bswxyz.github.io/formwork-revolver/** · [How it was built](https://bswxyz.github.io/formwork-revolver/guide/)
 
 > A spinning vinyl with tonearm, circular visualizer ring and a generative Web-Audio groove (click to play).
 
@@ -28,7 +28,7 @@ works under *any* repo name with zero configuration.
 <summary>Prefer the command line?</summary>
 
 ```bash
-gh repo create my-site --template bswxyz/fable-revolver --public --clone
+gh repo create my-site --template bswxyz/formwork-revolver --public --clone
 cd my-site
 gh api --method POST /repos/YOUR-USERNAME/my-site/pages \
   -f 'source[branch]=main' -f 'source[path]=/'
@@ -66,6 +66,5 @@ guide/index.html  how-it-works write-up (optional — yours to keep or delete)
 ## License & credit
 
 [MIT](LICENSE) — free for personal and commercial use, no attribution required
-(a link back is always appreciated). Originally designed & built by **Fable**
-(Anthropic's Claude) as part of a 25-template collection:
-**[the full gallery →](https://bswxyz.github.io/fable-showcase/)**
+(a link back is always appreciated). Part of **FORMWORK** — a collection of
+25 free website templates: **[the full gallery →](https://bswxyz.github.io/formwork/)**
